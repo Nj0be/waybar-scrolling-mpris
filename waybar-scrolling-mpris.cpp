@@ -53,9 +53,13 @@ int main(int argc, char* argv[])
     int width = 0;
     int windowBegin = 0, windowEnd = 0, initWindowEnd = 0;
     int lastCharLen = 0;
+    std::string oldArtist, oldTitle, oldAlbum;
     while (1)
     {
         int printedWidth = 0;
+        oldArtist = pctl.GetMetadata("artist");
+        oldTitle = pctl.GetMetadata("title");
+        oldAlbum = pctl.GetMetadata("album");
         pctl.UpdateCurrentMetaData();
         const auto& status = pctl.GetMetadata("status");
 
@@ -66,11 +70,10 @@ int main(int argc, char* argv[])
             printf("\n");
         else
         {
-            const auto& currentMediaString = GetCurrentMediaString(formatString, variables, pctl);
-            int length = currentMediaString.size();
-            if (currentMediaString != showMediaString)
+            showMediaString = GetCurrentMediaString(formatString, variables, pctl);
+            int length = showMediaString.size();
+            if (oldArtist != pctl.GetMetadata("artist") || oldTitle != pctl.GetMetadata("title") || oldAlbum != pctl.GetMetadata("album"))
             {
-                showMediaString = currentMediaString;
                 width = util::GetWidthStringUTF8(showMediaString.c_str());
                 windowBegin = 0;
                 if (width <= maxWidth)

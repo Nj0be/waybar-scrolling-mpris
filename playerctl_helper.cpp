@@ -20,7 +20,7 @@ void Playerctl::UpdateCurrentMetaData()
 {
     Clear();
 
-    const char* command = "playerctl metadata --format \'{ \"player\":\"{{markup_escape(playerName)}}\", \"status\":\"{{status}}\", \"artist\":\"{{markup_escape(artist)}}\", \"album\":\"{{markup_escape(album)}}\", \"title\":\"{{markup_escape(title)}}\" }\' -s";
+    const char* command = "playerctl metadata --format \'{ \"player\":\"{{markup_escape(playerName)}}\", \"status\":\"{{status}}\", \"artist\":\"{{markup_escape(artist)}}\", \"album\":\"{{markup_escape(album)}}\", \"title\":\"{{markup_escape(title)}}\", \"duration\":\"{{markup_escape(duration(mpris:length))}}\", \"position\":\"{{markup_escape(duration(position))}}\" }\' -s";
 
     FILE* p = popen(command, "r");
     fflush(stdout);
