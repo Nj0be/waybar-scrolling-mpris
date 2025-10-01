@@ -66,18 +66,20 @@ void Playerctl::UpdateCurrentMetaData()
 
     json_tokener_error err;
     json_object* json = json_tokener_parse_verbose(unescaped, &err);
+
     if (!json)
     {
         this->metadata["status"] = "Stopped";
-        return;
+    } else {
+        json_object_object_foreach(json, key, value)
+        {
+            int type = json_object_get_type(value);
+            if (type == json_type_string)
+                this->metadata[std::string(key)] = json_object_get_string(value);
+        }
     }
 
-    json_object_object_foreach(json, key, value)
-    {
-        int type = json_object_get_type(value);
-        if (type == json_type_string)
-            this->metadata[std::string(key)] = json_object_get_string(value);
-    }
+    json_object_put(json);
 }
 
 const char* Playerctl::GetMetadata(const std::string& variable) const

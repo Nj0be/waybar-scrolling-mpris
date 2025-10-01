@@ -12,3 +12,9 @@ add_executable(${PROJECT_NAME} waybar-scrolling-mpris.cpp config.cpp playerctl_h
 
 target_link_libraries(${PROJECT_NAME} PRIVATE json-c::json-c)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_11)
+
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+# set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native -flto=auto")
+# disable asserts in release builds
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -flto=auto -DNDEBUG")
